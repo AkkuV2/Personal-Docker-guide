@@ -1,0 +1,1 @@
+## Guia personal de docker.
