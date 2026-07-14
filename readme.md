@@ -37,3 +37,40 @@ Un orden de capas de ejemplo seria:
 ## Comandos basicos de docker
 Ya con toda la informacion explicada de que es docker y como funciona, se mostraran una lista de comandos de docker para poder usarlo correctamente.
 
+### Dockerhub
+Para descargar imagenes de dockerhub que puedas utilizar en tus imagenes, tienes el siguiente comando:
+
+```
+docker pull <paquete>
+```
+
+Un ejemplo mas explicito seria
+
+```
+docker pull debian:trixie-backports
+```
+
+> **Nota:** Algunas imagenes estan construidas a partir de otras imagenes generando una cadena de dependencias, por ello ciertas imagenes de dockerhub ya vienen con un system file incluido como en el caso de PHP
+
+### imagenes de docker
+Para ver una imagen hay un solo comando con varias opciones para especificar que quieres mostrar.
+
+Para ver las imagenes instaladas y en uso:
+```
+docker images
+```
+
+Para ver todas las imagenes (incluyendo las no tageadas/eliminadas)
+```
+docker images -a
+```
+Para ver un resumen de informacion de todas las imagenes actuales de docker:
+```
+docker images --digests
+```
+
+Para ver solo las IDs de cada imagen:
+```
+docker images -q 
+docker images --quiet
+```
