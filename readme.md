@@ -29,9 +29,11 @@ Docker a la hora de utilizar un contenedor decide llenarlo con todo lo necesario
 
 Un orden de capas de ejemplo seria:
 - Dependencias del programa (Segunda capa)
+- Codigo fuente del programa(Segunda capa)
 - Kernel del host(no se descarga, el propio host lo comparte automaticamente dentro del contenedor - segunda capa)
 - Debian/Alpine(systemfile de dicho sistema operativo - primera capa)
 > **Nota:** El kernel no forma parte de la imagen ni de sus capas. Docker no lo descarga; el host lo comparte automáticamente con el contenedor.
+
 
 
 ## Comandos basicos de docker
