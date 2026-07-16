@@ -39,6 +39,15 @@ Un orden de capas de ejemplo seria:
 ## Comandos basicos de docker
 Ya con toda la informacion explicada de que es docker y como funciona, se mostraran una lista de comandos de docker para poder usarlo correctamente.
 
+### build
+El comando build se usa cuando ya se tiene una Dockerfile definido y se quiere crear una instancia activa para contenirizar el proyecto, el comando es el siguiente:
+
+```
+docker build -t miapp .
+```
+>**Nota:** El comando -t es para especificar que le daras el siguiente nombre, y el . es para especificar 
+que el comando se basara en el Dockerfile que encuentre en el directorio actual
+
 ### Dockerhub
 Para descargar imagenes de dockerhub que puedas utilizar en tus imagenes, tienes el siguiente comando:
 
@@ -75,4 +84,34 @@ Para ver solo las IDs de cada imagen:
 ```
 docker images -q 
 docker images --quiet
+```
+
+## Dockerfile
+Un Dockerfile es un archivo que contiene una serie de instrucciones que representan como crear una imagen para poder usarla en un contenedor de docker (que es una instancia activa de una imagen de docker), cada instruccion del Dockerfile puede representar una capa del contenedor. Este tiene que ser organizado correctamente para poder beneficiarse de funcionalidades como la layer cache.
+
+### Como crear un archivo Dockerfile
+La estructura basica de un archivo Dockerfile es la siguiente:
+```
+FROM node:17-alpine   -------> primera capa, se especifica que imagen se usara, en este caso, se usa la imagen de node que a su vez esta basada en el file system de alpine
+
+WORKDIR /app          -------> Segunda capa, en esta se declara que la ruta a trabajar (workdir) es /app, haciendo que cualquier ruta especificada sera por defecto en esta
+
+COPY . .              -------> Segunda capa, el copy se encarga de copiar los archivos raiz del directorio actual y pegarlos en un directorio destino (solo que como ahora
+                               tiene un workdir la ruta por defecto va a ser /app, por lo tanto no se tiene que especificar pues la ruta se vuelve absoulta)
+
+RUN npm install       -------> Segunda capa, se instalan las dependencias del proyecto.
+
+EXPOSE 4000           -------> Segunda capa, se expone el puerto que requiere el proyecto(esto es enteramente opcional)
+
+CMD ["node", "app.js"] -------> Tercera capa, Se ejecutan comandos dentro de la instancia activa de la imagen, se usa CMD para especificar que son comandos a ejecutar 
+                                atraves de la terminal, ya que los comandos RUN son para declarar pasos de la imagen en una instancia inactiva.
+```
+
+## Dockerignore
+Dockerignore es una extension de archivo que especifica a docker que archivos u directorios no se deben de incluir como archivos copiados dentro de un Dockerfile. El archivo se escribe como **.dockerignore**
+
+Dentro de este archivo se tiene la siguiente forma para especificar que archivos u directorios no copiar o tener en cuenta.
+```
+archivo.txt     ---> archivo unico.
+carpeta-ejemplo/ ---> toda una carpeta, incluido su contenido.
 ```
