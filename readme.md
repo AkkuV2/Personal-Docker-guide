@@ -13,7 +13,8 @@ Una imagen es la que define todo lo necesario para ejecutar un programa dentro d
 Una imagen se puede interpretar como una plantilla u receta que contiene todas las instrucciones necesarias para que un programa se ejecute correctamente.
 Si bien hay imagenes subidas a dockerhub, todas parten del mismo proceso para poder crear una imagen.
 
-Ej: Una imagen de Debian 13 para poder ser subida solo requiere el filesystem de debian, no se sube nada referente al kernel porque los **contenedores de docker obtienen el kernel por el host que esta ejecutando dichos contenedores. El kernel lo comparte el pc. 
+##### Ejemplo
+ Una imagen de Debian 13 para poder ser subida solo requiere el filesystem de debian, no se sube nada referente al kernel porque los **contenedores de docker obtienen el kernel por el host que esta ejecutando dichos contenedores. El kernel lo comparte el pc. 
 
 De esta manera cuando se sube una imagen, se sube solo lo necesario para que funcione en otros equipos.
 
