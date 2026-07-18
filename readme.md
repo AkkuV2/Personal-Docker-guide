@@ -87,6 +87,23 @@ docker images -q
 docker images --quiet
 ```
 
+### Contenedores de docker
+Un contenedor de docker es una instancia de una imagen creada ya usandose activamente. Para poder crear y gestionar un contenedor de docker estan los siguientes comandos.
+
+#### Crear un contenedor
+Para crear un contenedor se necesita una imagen ya existente en la que se pueda basar para crear dicho contenedor.
+
+```
+docker run --name -d miApp_contenedor <nombre de la imagen>
+```
+**docker run** se usa para inicializar la creacion del contenedor, y correrlo en una instancia activa instantaneamente, la opcion **--name** se enfoca en otorgarle un nombre al contenedor mientras que **-d** esta enfocado en correr todo el proceso de background(quiere decir que se hara en segundo plano y que sin importar que la instancia este activa o no, puedas usar la consola, sin esta opcion, al ejecutar docker run la terminal quedaria inutilizable hasta que se pause o desactive la instancia activa del contenedor), despues **miApp_contenedor** es el nombre del contendor, se usa de forma explicita el nombre de la imagen de primero como una buena practica, y por ultimo en un parametro aparte se referencia el nombre de la imagen que se creo.
+
+Si deseas ver los contenedores activos que estan en docker, usa el siguiente comando.
+
+```
+docker ps
+```
+Esto devolvera todos los contenedores que se encuentran activos en docker.
 ## Dockerfile
 Un Dockerfile es un archivo que contiene una serie de instrucciones que representan como crear una imagen para poder usarla en un contenedor de docker (que es una instancia activa de una imagen de docker), cada instruccion del Dockerfile puede representar una capa del contenedor. Este tiene que ser organizado correctamente para poder beneficiarse de funcionalidades como la layer cache.
 
