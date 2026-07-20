@@ -103,10 +103,23 @@ Si deseas ver los contenedores activos que estan en docker, usa el siguiente com
 ```
 docker ps
 ```
-Esto devolvera todos los contenedores que se encuentran activos en docker.
+Esto devolvera todos los contenedores que se encuentran activos en docker. Dando informacion crucial referente a como el **puerto en el que se accede**,  su **status**, **ID**, entre otras cosas.
+
+#### Encender un contenedor
+Para encender un contenedor que ya se encuentra creado en docker, se usa el siguiente comando.
+
+```
+docker start <ID del contenedor>(o)<nombre del contenedor>
+```
+
+#### Detener un contenedor
+Para detener una instancia activa de un contenedor lo adecuado es usar el siguiente comando para dicha tarea.
+
+```
+docker stop <ID del contenedor>(o)<nombre del contenedor>
+```
 ## Dockerfile
 Un Dockerfile es un archivo que contiene una serie de instrucciones que representan como crear una imagen para poder usarla en un contenedor de docker (que es una instancia activa de una imagen de docker), cada instruccion del Dockerfile puede representar una capa del contenedor. Este tiene que ser organizado correctamente para poder beneficiarse de funcionalidades como la layer cache.
-
 ### Como crear un archivo Dockerfile
 La estructura basica de un archivo Dockerfile es la siguiente:
 ```
@@ -124,6 +137,33 @@ EXPOSE 4000           -------> Segunda capa, se expone el puerto que requiere el
 CMD ["node", "app.js"] -------> Tercera capa, Se ejecutan comandos dentro de la instancia activa de la imagen, se usa CMD para especificar que son comandos a ejecutar 
                                 atraves de la terminal, ya que los comandos RUN son para declarar pasos de la imagen en una instancia inactiva.
 ```
+
+## Layer caching
+Layer caching es una propiedad del propio docker para permitir al usuario usar la propia cache que se tiene de un Dockerfile para crear una imagen con el fin de no hacer todos los pasos de dicho archivo con el fin de ahorrar mas tiempo y no usar recursos que ya se tienen.
+
+El layer cache lo que haces es - con la cache que almacena de un Dockerfile que ya fue creado previamente - se salta ciertos pasos para crear una imagen porque **ya tiene los recursos de dichos pasos almacenados**.
+
+Si el usuario creo una imagen antes con un Dockerfile y decide modificar ese mismo Dockerfile con el fin de cambiar algo, al ejecutar un **build** al Dockerfile se saltaran todos los pasos que se tienen antes del cambio (haciendo que el tiempo para que docker los agregue a la imagen sea 0) y cuando llegue la capa exacta en donde se hizo el cambio, empezara a hacer el proceso desde 0 sin acceder a la cache.
+
+##### Ejemplo
+Si el usuario ya ejecuto el siguiente Dockerfile y decide cambiar algo a partir de cierta capa.
+```
+FROM node:17-alpine
+
+WORKDIR /app        
+
+COPY . .
+
+RUN npm install      
+
+RUN npm git  <-- el cambio que hizo el usuario
+
+EXPOSE 4000         
+
+CMD ["node", "app.js"] 
+```
+Todas las capas previas se añadiran inmediatamente a la imagen mientras que en la capa nueva que agrego el usuario se empezara a aplicar los cambios de forma mas lenta (sea porque se esta descargando o configurando) y el resto de capaz que le siguen despues de esa linea tambien tendran la misma reaccion, empezaran a aplicarse de forma mas lenta porque ya no se hacen desde la memoria cache que tiene docker respecto a esa imagen. 
+Debido a esta caracteristica de docker se debe de saber crear Dockerfiles con buenas estructuras de capa de forma estrategica para aprovechar el layer caching, ahorrando tiempo al usar la cache que maneja docker.
 
 ## Dockerignore
 Dockerignore es una extension de archivo que especifica a docker que archivos u directorios no se deben de incluir como archivos copiados dentro de un Dockerfile. El archivo se escribe como **.dockerignore**
