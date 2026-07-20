@@ -94,7 +94,7 @@ docker image rm <nombre de la imagen>(o)<ID>
 La imagen puede ser eliminada siempre y cuando no este siendo reproducida en un contenedor aparte, se puede eliminar con **rm -f**, pero para mayor seguridad primero se debe de borrar el contenedor con la imagen siendo reproducida y luego dicha imagen.
 
 
-### Gestion de contenedores de docker
+### Contenedores de docker
 Un contenedor de docker es una instancia de una imagen creada ya usandose activamente. Para poder crear y gestionar un contenedor de docker estan los siguientes comandos.
 
 #### Crear un contenedor
@@ -125,19 +125,6 @@ Para detener una instancia activa de un contenedor lo adecuado es usar el siguie
 ```
 docker stop <ID del contenedor>(o)<nombre del contenedor>
 ```
-
-#### Eliminar un contedor
-Para eliminar el contenedor de docker se debe de usar el siguiente comando.
-```
-docker container rm <nombre del contendor>(o)<ID del contenedor>
-```
-Si el contenedor esta siendo activo,lo ideal es apagarlo y eliminarlo, sin embargo tambien se puede eliminar incluso estando activo con el siguiente comando
-
-```
-docker container rm -f <nombre del contendor>(o)<ID del contenedor>
-```
-Siendo la opcion _**-F**_ usada para forzar una accion (force).
-
 ## Dockerfile
 Un Dockerfile es un archivo que contiene una serie de instrucciones que representan como crear una imagen para poder usarla en un contenedor de docker (que es una instancia activa de una imagen de docker), cada instruccion del Dockerfile puede representar una capa del contenedor. Este tiene que ser organizado correctamente para poder beneficiarse de funcionalidades como la layer cache.
 ### Como crear un archivo Dockerfile
